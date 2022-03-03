@@ -79,8 +79,8 @@ namespace SealWebServer.Controllers
                 }
 
                 //Audit
-                Audit.LogAudit(AuditType.Login, WebUser);
-                Audit.LogEventAudit(AuditType.EventLoggedUsers, SealSecurity.LoggedUsers.Count(i => i.IsAuthenticated).ToString());
+                //Audit.LogAudit(AuditType.Login, WebUser);
+                //Audit.LogEventAudit(AuditType.EventLoggedUsers, SealSecurity.LoggedUsers.Count(i => i.IsAuthenticated).ToString());
 
                 //Set repository defaults
                 var defaultGroup = WebUser.DefaultGroup;
@@ -719,8 +719,8 @@ namespace SealWebServer.Controllers
             {
                 if (WebUser != null) WebUser.Logout();
                 //Audit
-                Audit.LogAudit(AuditType.Logout, WebUser);
-                Audit.LogEventAudit(AuditType.EventLoggedUsers, SealSecurity.LoggedUsers.Count(i => i.IsAuthenticated).ToString());
+                //Audit.LogAudit(AuditType.Logout, WebUser);
+                //Audit.LogEventAudit(AuditType.EventLoggedUsers, SealSecurity.LoggedUsers.Count(i => i.IsAuthenticated).ToString());
                 //Clear session
                 NavigationContext.Navigations.Clear();
                 setSessionValue(SessionUser, null);
@@ -728,13 +728,7 @@ namespace SealWebServer.Controllers
                 setSessionValue(SessionUploadedFiles, null);
                 CreateWebUser();
 
-                //SignOut
-                if (AuthenticationConfig.Enabled)
-                {
-                    return SignOut("Cookies", "oidc");
-                }
-
-                return Json(new { });
+                return SignOut("Cookies", "oidc");
             }
             catch (Exception ex)
             {
